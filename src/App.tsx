@@ -10,17 +10,31 @@ import {
   useNodesState,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+import { OscillatorNode } from "./components/OscillatorNode";
+import { VolumeNode } from "./components/VolumeNode";
+import { OutputNode } from "./components/OutputNode";
 
 const initialNodes = [
   {
     id: "1",
-    data: { label: "Node 1" },
+    data: { frequency: 300, type: "square" },
+    type: "osc",
     position: { x: 0, y: 0 },
   },
   {
     id: "2",
-    data: { label: "Node 2" },
-    position: { x: 0, y: 100 },
+    data: { gain: 0.6 },
+    type: "volume",
+    position: { x: 0, y: 300 },
+  },
+  {
+    id: "3",
+    position: {
+      x: 0,
+      y: 500,
+    },
+    data: {},
+    type: "out",
   },
 ];
 
@@ -30,7 +44,18 @@ const initialEdges = [
     source: "1",
     target: "2",
   },
+  {
+    id: "e2-3",
+    source: "2",
+    target: "3",
+  },
 ];
+
+const nodeTypes = {
+  osc: OscillatorNode,
+  volume: VolumeNode,
+  out: OutputNode,
+};
 
 export default function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -48,6 +73,7 @@ export default function App() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        nodeTypes={nodeTypes}
         fitView
       >
         <Controls />
