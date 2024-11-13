@@ -49,6 +49,13 @@ export function connect(sourceId: string, targetId: string) {
   const source = nodes.get(sourceId);
   const target = nodes.get(targetId);
 
+  source.connect(target);
+}
+
+export function disconnect(sourceId: string, targetId: string) {
+  const source = nodes.get(sourceId);
+  const target = nodes.get(targetId);
+
   source.disconnect(target);
 }
 
